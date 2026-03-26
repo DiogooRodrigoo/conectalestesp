@@ -10,6 +10,7 @@ import {
   ArrowUpRight,
   Sparkle,
 } from "@phosphor-icons/react";
+import Link from "next/link";
 
 const EASE: [number, number, number, number] = [0.32, 0.72, 0, 1];
 
@@ -37,6 +38,7 @@ const rows = [
       accent: "bg-gradient-to-br from-[#F97316]/8 to-[#F97316]/3",
       iconBg: "bg-[#F97316]",
       large: true, // col-span-2
+      href: "/servicos/social-media",
     },
     {
       id: "presenca",
@@ -50,6 +52,7 @@ const rows = [
       accent: "bg-gradient-to-br from-zinc-50 to-zinc-50/50",
       iconBg: "bg-zinc-900",
       large: false, // col-span-1
+      href: "/servicos/presenca-digital",
     },
   ],
   [
@@ -65,6 +68,7 @@ const rows = [
       accent: "bg-gradient-to-br from-[#F97316]/8 to-[#F97316]/3",
       iconBg: "bg-[#F97316]",
       large: false, // col-span-1
+      href: "/servicos/marque-ja",
     },
     {
       id: "vitrine",
@@ -78,6 +82,7 @@ const rows = [
       accent: "bg-gradient-to-br from-zinc-50 to-zinc-50/50",
       iconBg: "bg-zinc-900",
       large: true, // col-span-2
+      href: "/servicos/vitrine-digital",
     },
   ],
 ];
@@ -93,10 +98,11 @@ type CardProps = {
   accent: string;
   iconBg: string;
   large: boolean;
+  href?: string;
   index: number;
 };
 
-function ServiceCard({ id, icon: Icon, label, tag, tagColor, description, features, accent, iconBg, large, index }: CardProps) {
+function ServiceCard({ id, icon: Icon, label, tag, tagColor, description, features, accent, iconBg, large, href, index }: CardProps) {
   return (
     <motion.div
       key={id}
@@ -126,10 +132,20 @@ function ServiceCard({ id, icon: Icon, label, tag, tagColor, description, featur
             </span>
           ))}
         </div>
-        <button className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-900 transition-colors duration-200 group-hover:text-zinc-700 w-fit mt-1">
-          Saiba mais
-          <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
-        </button>
+        {href ? (
+          <Link
+            href={href}
+            className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-900 transition-colors duration-200 group-hover:text-zinc-700 w-fit mt-1"
+          >
+            Saiba mais
+            <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+          </Link>
+        ) : (
+          <button className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-900 transition-colors duration-200 group-hover:text-zinc-700 w-fit mt-1">
+            Saiba mais
+            <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+          </button>
+        )}
       </div>
     </motion.div>
   );
@@ -245,12 +261,15 @@ export default function Services() {
                 </div>
 
                 {/* CTA */}
-                <button className="flex items-center gap-2 bg-purple-600 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-purple-700 transition-all duration-300 active:scale-[0.97] group-hover:shadow-[0_8px_24px_-8px_rgba(147,51,234,0.4)]">
+                <Link
+                  href="/servicos/persona-ia"
+                  className="flex items-center gap-2 bg-purple-600 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-purple-700 transition-all duration-300 active:scale-[0.97] group-hover:shadow-[0_8px_24px_-8px_rgba(147,51,234,0.4)]"
+                >
                   Conhecer a Persona IA
                   <span className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center">
                     <ArrowUpRight size={11} weight="bold" />
                   </span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
