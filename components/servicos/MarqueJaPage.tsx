@@ -373,76 +373,182 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
   );
 }
 
+// ─── MacBook Screen: Scheduling System ────────────────────────────────────────
+
+function MacBookScreen() {
+  const slots = [
+    { time: "09:00", name: "João Silva", service: "Corte + Barba", color: "bg-[#F97316]/15 border-[#F97316]/30 text-[#F97316]", dot: "bg-[#F97316]" },
+    { time: "10:00", name: "Pedro Melo", service: "Corte", color: "bg-sky-50 border-sky-200 text-sky-600", dot: "bg-sky-400" },
+    { time: "11:00", free: true },
+    { time: "12:00", name: "Carlos Reis", service: "Barba", color: "bg-violet-50 border-violet-200 text-violet-600", dot: "bg-violet-400" },
+    { time: "14:00", name: "Lucas Gomes", service: "Combo", color: "bg-emerald-50 border-emerald-200 text-emerald-600", dot: "bg-emerald-400" },
+    { time: "15:00", free: true },
+    { time: "16:00", name: "Rafael Costa", service: "Corte", color: "bg-[#F97316]/15 border-[#F97316]/30 text-[#F97316]", dot: "bg-[#F97316]" },
+  ];
+
+  return (
+    <div className="w-full h-full bg-[#F8F7F4] flex overflow-hidden">
+      {/* Sidebar */}
+      <div className="w-[28%] h-full bg-white border-r border-zinc-100 flex flex-col">
+        {/* Logo */}
+        <div className="px-2.5 pt-3 pb-2 border-b border-zinc-100">
+          <div className="flex items-center gap-1.5">
+            <div className="w-4 h-4 rounded-md bg-[#F97316] flex items-center justify-center shrink-0">
+              <span className="text-white text-[7px] font-black">M</span>
+            </div>
+            <span className="text-[8px] font-bold text-zinc-900">Marque Já</span>
+          </div>
+        </div>
+        {/* Nav */}
+        <div className="flex flex-col gap-0.5 p-1.5 flex-1">
+          {[
+            { label: "Agenda", active: true },
+            { label: "Clientes", active: false },
+            { label: "Serviços", active: false },
+            { label: "Relatórios", active: false },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className={`rounded-md px-2 py-1 text-[7px] font-semibold ${
+                item.active
+                  ? "bg-[#F97316]/10 text-[#F97316]"
+                  : "text-zinc-400"
+              }`}
+            >
+              {item.label}
+            </div>
+          ))}
+        </div>
+        {/* Mini stats */}
+        <div className="p-1.5 border-t border-zinc-100 flex flex-col gap-1">
+          <div className="bg-zinc-50 rounded-md p-1.5">
+            <span className="text-[6px] text-zinc-400 block">Hoje</span>
+            <span className="text-[11px] font-bold text-zinc-900">5 agend.</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Topbar */}
+        <div className="flex items-center justify-between px-2.5 py-2 border-b border-zinc-100 bg-white">
+          <span className="text-[8px] font-bold text-zinc-900">Segunda, 28 Abr</span>
+          <div className="flex items-center gap-1">
+            <div className="w-4 h-4 rounded-full bg-[#F97316] flex items-center justify-center">
+              <span className="text-white text-[6px] font-black">+</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Slots */}
+        <div className="flex-1 overflow-hidden px-2 py-1.5 flex flex-col gap-1">
+          {slots.map((s) =>
+            "free" in s ? (
+              <div
+                key={s.time}
+                className="flex items-center gap-1.5 rounded-md border border-dashed border-zinc-200 bg-white/60 px-2 py-1"
+              >
+                <span className="text-[6px] font-semibold text-zinc-300 w-6 shrink-0">{s.time}</span>
+                <span className="text-[6px] text-zinc-300">— livre</span>
+              </div>
+            ) : (
+              <div
+                key={s.time}
+                className={`flex items-center gap-1.5 rounded-md border px-2 py-1 ${s.color}`}
+              >
+                <span className="text-[6px] font-bold w-6 shrink-0 opacity-70">{s.time}</span>
+                <div className={`w-1 h-1 rounded-full shrink-0 ${s.dot}`} />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[6.5px] font-semibold block leading-tight truncate">{s.name}</span>
+                  <span className="text-[5.5px] opacity-60">{s.service}</span>
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Hero Visual ──────────────────────────────────────────────────────────────
 
 function HeroVisual() {
   return (
-    <div className="relative w-full h-75 sm:h-90 lg:h-105">
-      {/* Esquerda: grade de horários */}
+    <div className="relative w-full flex items-center justify-center py-8">
+      {/* Glow de fundo */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-80 h-40 rounded-full bg-[#F97316]/10 blur-3xl" />
+      </div>
+
+      {/* MacBook flutuando */}
       <motion.div
         animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-0 top-8 w-22.5 h-40 rounded-2xl overflow-hidden border border-white/20 shadow-2xl"
-        style={{ rotate: "-6deg" }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        className="relative z-10"
       >
-        <div className="w-full h-full bg-zinc-900 p-2 flex flex-col gap-1">
-          <span className="text-white/50 text-[7px] font-bold mb-1">HORÁRIOS</span>
-          {["09:00", "10:00", "11:00", "14:00"].map((h, i) => (
-            <div
-              key={h}
-              className={`rounded-md px-1.5 py-1 text-[7px] font-semibold ${
-                i === 0 ? "bg-[#F97316] text-white" : "bg-white/10 text-white/60"
-              }`}
-            >
-              {h}
-            </div>
-          ))}
+        {/* Lid / tela */}
+        <div
+          className="relative rounded-t-xl overflow-hidden border border-zinc-300 bg-zinc-800"
+          style={{ width: 420, height: 264 }}
+        >
+          {/* Moldura da tela */}
+          <div className="absolute inset-0 bg-zinc-900 rounded-t-xl" />
+          {/* Notch câmera */}
+          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-zinc-700 z-20" />
+          {/* Tela */}
+          <div className="absolute inset-1.25 rounded-lg overflow-hidden">
+            <MacBookScreen />
+          </div>
+        </div>
+
+        {/* Base / teclado */}
+        <div className="relative" style={{ width: 420 }}>
+          {/* Superficie do teclado */}
+          <div
+            className="w-full bg-linear-to-b from-zinc-300 to-zinc-400 rounded-b-xl shadow-[0_16px_48px_-8px_rgba(0,0,0,0.35)]"
+            style={{ height: 14 }}
+          />
+          {/* Reflexo */}
+          <div
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-zinc-200 rounded-b-sm"
+            style={{ width: 120, height: 4 }}
+          />
+          {/* Sombra no chão */}
+          <div
+            className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/20 blur-lg"
+            style={{ width: 340, height: 14 }}
+          />
         </div>
       </motion.div>
 
-      {/* Centro: confirmação WhatsApp */}
+      {/* Card flutuante: novo agendamento */}
+      <motion.div
+        animate={{ y: [0, -7, 0] }}
+        transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+        className="absolute top-4 -right-2 lg:right-0 bg-white rounded-xl border border-zinc-100 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)] px-3 py-2 z-20 flex items-center gap-2"
+      >
+        <div className="w-6 h-6 rounded-full bg-[#25D366] flex items-center justify-center shrink-0">
+          <span className="text-white text-[8px] font-black">✓</span>
+        </div>
+        <div>
+          <span className="text-[8px] font-bold text-zinc-900 block">Novo agendamento</span>
+          <span className="text-[7px] text-zinc-400">Marcos — 17:00 • Corte</span>
+        </div>
+      </motion.div>
+
+      {/* Card flutuante: ocupação */}
       <motion.div
         animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        className="absolute left-20 top-0 w-45 rounded-xl overflow-hidden border border-zinc-200 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.2)]"
+        transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        className="absolute bottom-6 -left-2 lg:left-0 bg-white rounded-xl border border-zinc-100 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)] px-3 py-2 z-20"
       >
-        <div className="bg-[#075E54] px-2.5 py-2 flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-[#25D366] flex items-center justify-center shrink-0">
-            <span className="text-white text-[8px] font-black">B</span>
+        <span className="text-[7px] text-zinc-400 block mb-1">Ocupação hoje</span>
+        <div className="flex items-center gap-2">
+          <div className="w-20 h-1.5 rounded-full bg-zinc-100 overflow-hidden">
+            <div className="h-full w-[71%] rounded-full bg-[#F97316]" />
           </div>
-          <span className="text-white text-[9px] font-semibold">Barbearia Silva</span>
-        </div>
-        <div className="bg-[#ECE5DD] p-2 flex flex-col gap-1.5">
-          <div className="self-end bg-[#DCF8C6] rounded-lg px-2 py-1.5 max-w-[90%]">
-            <p className="text-zinc-800 text-[7px] leading-relaxed whitespace-pre-line">
-              {"✓✓ Horário confirmado!\nCorte — Seg 14h"}
-            </p>
-          </div>
-          <div className="self-start bg-white rounded-lg px-2 py-1.5 max-w-[80%]">
-            <p className="text-zinc-700 text-[7px]">Te esperamos! 😊</p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Direita: agenda do dia */}
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute right-0 top-16 w-22.5 h-40 rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl"
-        style={{ rotate: "5deg" }}
-      >
-        <div className="w-full h-full bg-white p-2 flex flex-col gap-1">
-          <span className="text-zinc-800 text-[7px] font-bold mb-1">Hoje</span>
-          {[
-            ["09:00", "João"],
-            ["10:00", "Pedro"],
-            ["14:00", "Carlos"],
-          ].map(([t, n]) => (
-            <div key={t} className="rounded-md bg-zinc-50 border border-zinc-100 px-1.5 py-1">
-              <span className="text-[#F97316] text-[6px] font-bold block">{t}</span>
-              <span className="text-zinc-700 text-[6px]">{n}</span>
-            </div>
-          ))}
+          <span className="text-[8px] font-bold text-zinc-900">71%</span>
         </div>
       </motion.div>
     </div>
