@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   RobotIcon,
   ArrowUpRightIcon,
@@ -364,89 +365,280 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
 
 // ─── Hero Visual ──────────────────────────────────────────────────────────────
 
+const PERSONAS = [
+  {
+    initials: "CT",
+    image: "/chef-toninho.jpeg",
+    name: "Chef Toninho",
+    negocio: "Restaurante",
+    voz: "bem-humorado · direto",
+    estilo: "informal · autêntico",
+    emoji: "👨‍🍳",
+    post: "Hoje tem prato especial no almoço! 🍝 Vem que tá incrível!",
+    likes: "218",
+    gradient: "linear-gradient(135deg, #F97316, #EA580C)",
+    glow: "#F97316",
+    ring: "rgba(249,115,22,0.4)",
+  },
+  {
+    initials: "BB",
+    image: "/barba-do-bairro.png",
+    name: "Barba do Bairro",
+    negocio: "Barbearia",
+    voz: "raiz · confiante",
+    estilo: "masculino · descolado",
+    emoji: "✂️",
+    post: "Quem não cuida da barba tá perdendo tempo 😂 Passa aqui hoje!",
+    likes: "342",
+    gradient: "linear-gradient(135deg, #7C3AED, #6D28D9)",
+    glow: "#7C3AED",
+    ring: "rgba(124,58,237,0.4)",
+  },
+  {
+    initials: "DE",
+    image: "/dra-estetica.png",
+    name: "Dra. Estética",
+    negocio: "Clínica de estética",
+    voz: "acolhedora · especialista",
+    estilo: "elegante · confiável",
+    emoji: "💆‍♀️",
+    post: "Você merece se cuidar! ✨ Agende sua avaliação gratuita hoje.",
+    likes: "501",
+    gradient: "linear-gradient(135deg, #EC4899, #BE185D)",
+    glow: "#EC4899",
+    ring: "rgba(236,72,153,0.4)",
+  },
+];
+
 function HeroVisual() {
+  const [idx, setIdx] = useState(0);
+  const [step, setStep] = useState<"scanning" | "ready">("scanning");
+
+  useEffect(() => {
+    const cycle = setInterval(() => {
+      setStep("scanning");
+      setTimeout(() => {
+        setIdx((i) => (i + 1) % PERSONAS.length);
+        setStep("ready");
+      }, 900);
+    }, 3200);
+    return () => clearInterval(cycle);
+  }, []);
+
+  const p = PERSONAS[idx];
+
   return (
-    <div className="relative w-full h-75 sm:h-90 lg:h-105">
-      {/* Esquerda: avatar com badge IA */}
-      <motion.div
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-0 top-8 w-22.5 h-40 rounded-2xl overflow-hidden border border-purple-200 shadow-2xl bg-white"
-        style={{ rotate: "-6deg" }}
-      >
-        <div className="w-full h-full flex flex-col items-center justify-center gap-2 p-2">
-          <div
-            className="w-10 h-10 rounded-full flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #7C3AED, #6D28D9)" }}
-          >
-            <span className="text-white text-lg">✨</span>
-          </div>
-          <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="bg-purple-600 rounded-full px-2 py-0.5"
-          >
-            <span className="text-white text-[6px] font-bold">🤖 IA</span>
-          </motion.div>
-          <span className="text-zinc-700 text-[6px] font-semibold text-center">
-            Persona exclusiva
-          </span>
-        </div>
-      </motion.div>
+    <div className="relative w-full flex items-center justify-center py-6">
 
-      {/* Centro: post Instagram */}
+      {/* ── Glow ambiente ── */}
       <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        className="absolute left-20 top-0 w-45 rounded-xl overflow-hidden border border-zinc-200 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.2)] bg-white"
+        animate={{ opacity: [0.4, 0.7, 0.4] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
       >
-        <div className="flex items-center gap-2 px-2.5 py-2 border-b border-zinc-100">
-          <div
-            className="w-5 h-5 rounded-full shrink-0 flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #7C3AED, #6D28D9)" }}
-          >
-            <span className="text-white text-[6px] font-black">CT</span>
-          </div>
-          <span className="text-[8px] font-bold text-zinc-900">Chef Toninho</span>
-        </div>
         <div
-          className="h-16 w-full"
-          style={{ background: "linear-gradient(135deg, #F97316, #EA580C)" }}
+          className="w-72 h-48 rounded-full blur-3xl"
+          style={{ background: p.glow, opacity: 0.15 }}
         />
-        <div className="px-2.5 py-2">
-          <p className="text-zinc-700 text-[7px] leading-relaxed">
-            Hoje tem prato especial no almoço! 🍝 Vem que tá incrível!
-          </p>
-          <div className="flex items-center gap-1 mt-1.5">
-            <span className="text-[7px]">❤️</span>
-            <span className="text-zinc-400 text-[6px]">218 curtidas</span>
-          </div>
-        </div>
       </motion.div>
 
-      {/* Direita: tela de vídeo com play */}
+      {/* ── Card central: gerador de persona ── */}
       <motion.div
         animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute right-0 top-16 w-22.5 h-40 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-950"
-        style={{ rotate: "5deg" }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.5)]"
+        style={{ width: 320, background: "#0D0A1A" }}
       >
-        <div
-          className="w-full h-full flex flex-col items-center justify-center relative p-2"
-          style={{ background: "linear-gradient(135deg, #4C1D95, #5B21B6)" }}
-        >
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mb-2">
-            <span className="text-white text-sm">▶</span>
+        {/* Topbar do gerador */}
+        <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/5">
+          <div className="flex gap-1">
+            <div className="w-2 h-2 rounded-full bg-red-500/60" />
+            <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
+            <div className="w-2 h-2 rounded-full bg-green-500/60" />
           </div>
-          <div className="flex items-end gap-0.5 h-4">
-            {[2, 4, 3, 5, 2, 4, 3, 5, 2].map((h, i) => (
-              <div
+          <span className="text-[9px] text-white/30 font-mono mx-auto">persona.ia — gerando</span>
+        </div>
+
+        {/* Área do avatar */}
+        <div className="flex flex-col items-center pt-8 pb-6 px-6 relative">
+          {/* Scan line */}
+          <AnimatePresence>
+            {step === "scanning" && (
+              <motion.div
+                key="scan"
+                initial={{ top: "20%", opacity: 0.6 }}
+                animate={{ top: "90%", opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.85, ease: "linear" }}
+                className="absolute left-0 right-0 h-px pointer-events-none z-20"
+                style={{ background: `linear-gradient(90deg, transparent, ${p.glow}, transparent)` }}
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Orb externo pulsante */}
+          <div className="relative mb-5">
+            <motion.div
+              animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -inset-4 rounded-full blur-xl"
+              style={{ background: p.glow }}
+            />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              className="absolute -inset-2 rounded-full border border-dashed"
+              style={{ borderColor: p.ring }}
+            />
+
+            {/* Avatar */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={p.name}
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.7, opacity: 0 }}
+                transition={{ duration: 0.4, ease: EASE }}
+                className="relative w-20 h-20 rounded-full overflow-hidden shadow-[0_0_40px_-4px_rgba(0,0,0,0.6)]"
+                style={{ boxShadow: `0 0 32px -4px ${p.glow}` }}
+              >
+                <Image
+                  src={p.image}
+                  alt={p.name}
+                  fill
+                  className="object-cover scale-125 object-top"
+                  sizes="80px"
+                />
+                {/* Badge IA */}
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-md z-10">
+                  <span className="text-[10px]">🤖</span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Nome e negócio */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={p.name + "-text"}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35, ease: EASE }}
+              className="text-center mb-4"
+            >
+              <span className="text-white font-bold text-sm block">{p.name}</span>
+              <span className="text-white/40 text-[10px]">{p.negocio}</span>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Atributos da persona — terminal style */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={p.name + "-attrs"}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+              className="w-full bg-white/3 rounded-xl p-3 font-mono flex flex-col gap-1.5 border border-white/5"
+            >
+              {[
+                { label: "voz", value: p.voz },
+                { label: "estilo", value: p.estilo },
+                { label: "status", value: "✓ pronta para publicar" },
+              ].map((attr) => (
+                <div key={attr.label} className="flex gap-2 text-[9px]">
+                  <span className="text-white/25 w-10 shrink-0">{attr.label}</span>
+                  <span className="text-white/70">{attr.value}</span>
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Indicador de persona ativa */}
+          <div className="flex gap-1.5 mt-4">
+            {PERSONAS.map((_, i) => (
+              <motion.div
                 key={i}
-                className="w-0.5 bg-white/40 rounded-full"
-                style={{ height: h * 2 }}
+                animate={{ width: i === idx ? 20 : 6, opacity: i === idx ? 1 : 0.3 }}
+                transition={{ duration: 0.3 }}
+                className="h-1.5 rounded-full"
+                style={{ background: i === idx ? p.glow : "#fff" }}
               />
             ))}
           </div>
+        </div>
+      </motion.div>
+
+      {/* ── Card flutuante: post em tempo real ── */}
+      <motion.div
+        animate={{ y: [0, -7, 0] }}
+        transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        className="absolute top-2 -right-2 lg:-right-4 z-20 bg-white rounded-xl border border-zinc-100 shadow-[0_8px_28px_-4px_rgba(0,0,0,0.13)] overflow-hidden"
+        style={{ width: 148 }}
+      >
+        {/* Mini header Instagram */}
+        <div className="flex items-center gap-1.5 px-2.5 py-2 border-b border-zinc-100">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={p.name}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-4 h-4 rounded-full shrink-0 overflow-hidden"
+            >
+              <Image src={p.image} alt={p.name} fill className="object-cover" sizes="16px" />
+            </motion.div>
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={p.name + "-post-name"}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-[7px] font-bold text-zinc-900 truncate"
+            >
+              {p.name}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={p.name + "-post"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="px-2.5 py-2"
+          >
+            <p className="text-zinc-700 text-[7px] leading-relaxed line-clamp-2">{p.post}</p>
+            <div className="flex items-center gap-1 mt-1.5 pt-1.5 border-t border-zinc-50">
+              <span className="text-[8px]">❤️</span>
+              <span className="text-zinc-400 text-[6px]">{p.likes} curtidas</span>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      {/* ── Card flutuante: engajamento ── */}
+      <motion.div
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4.3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        className="absolute bottom-4 -left-2 lg:-left-4 z-20 bg-white rounded-xl border border-zinc-100 shadow-[0_8px_28px_-4px_rgba(0,0,0,0.13)] px-3 py-2.5"
+      >
+        <span className="text-[7px] text-zinc-400 block mb-1.5 font-medium">Resultado em 7 dias</span>
+        <div className="flex flex-col gap-1">
+          {[
+            { label: "Seguidores", value: "+48", color: "#7C3AED" },
+            { label: "Engajamento", value: "4.2%", color: "#EC4899" },
+          ].map((m) => (
+            <div key={m.label} className="flex items-center justify-between gap-4">
+              <span className="text-[7px] text-zinc-500">{m.label}</span>
+              <span className="text-[8px] font-bold" style={{ color: m.color }}>{m.value}</span>
+            </div>
+          ))}
         </div>
       </motion.div>
     </div>
@@ -500,11 +692,11 @@ export default function PersonaIAPage() {
               animate="visible"
               className="flex flex-wrap items-center gap-2 mb-6"
             >
-              <span className="px-3 py-1 rounded-full bg-purple-50 border border-purple-100 text-purple-600 text-[11px] uppercase tracking-[0.18em] font-semibold">
+              <span className="px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-500 text-[11px] uppercase tracking-[0.18em] font-semibold">
                 Serviço
               </span>
-              <span className="px-3 py-1 rounded-full bg-purple-50 border border-purple-100 text-purple-600 text-[11px] uppercase tracking-[0.18em] font-semibold">
-                Inovação
+              <span className="px-3 py-1 rounded-full bg-linear-to-r from-[#7C3AED] to-[#EC4899] text-white text-[11px] uppercase tracking-[0.18em] font-bold">
+                Persona IA
               </span>
             </motion.div>
 

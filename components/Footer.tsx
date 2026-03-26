@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { InstagramLogo, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 
 export default function Footer() {
@@ -6,8 +7,8 @@ export default function Footer() {
       <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#F97316] flex items-center justify-center">
-            <span className="text-white font-bold text-xs">CL</span>
+          <span className="w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center">
+            <Image src="/conecta-logo.jpeg" alt="Conecta Leste SP" width={28} height={28} className="object-cover w-full h-full" />
           </span>
           <span className="font-semibold text-sm text-zinc-900">Conecta Leste SP</span>
         </div>

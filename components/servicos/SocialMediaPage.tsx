@@ -548,11 +548,11 @@ export default function SocialMediaPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6">
             <motion.div variants={fadeUp(0)} initial="hidden" animate="visible" className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 rounded-full bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] text-white text-[11px] uppercase tracking-[0.18em] font-bold">
-                Social Media
-              </span>
               <span className="px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-500 text-[11px] uppercase tracking-[0.18em] font-semibold">
-                Carro-chefe
+                Serviço
+              </span>
+              <span className="px-3 py-1 rounded-full bg-linear-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] text-white text-[11px] uppercase tracking-[0.18em] font-bold">
+                Social Media
               </span>
             </motion.div>
 

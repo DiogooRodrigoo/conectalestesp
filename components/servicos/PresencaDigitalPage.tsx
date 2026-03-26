@@ -659,10 +659,10 @@ export default function PresencaDigitalPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6">
             <motion.div variants={fadeUp(0)} initial="hidden" animate="visible" className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 rounded-full bg-[#1A73E8] text-white text-[11px] uppercase tracking-[0.18em] font-bold">
-                Presença Digital
-              </span>
               <span className="px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-500 text-[11px] uppercase tracking-[0.18em] font-semibold">
+                Serviço
+              </span>
+              <span className="px-3 py-1 rounded-full bg-[#1A73E8] text-white text-[11px] uppercase tracking-[0.18em] font-bold">
                 Sites & Google
               </span>
             </motion.div>

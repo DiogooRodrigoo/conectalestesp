@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { List, X, ArrowUpRight, ArrowLeft } from "@phosphor-icons/react";
 
@@ -57,8 +58,8 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <span className="w-7 h-7 rounded-lg bg-[#F97316] flex items-center justify-center">
-              <span className="text-white font-bold text-xs">CL</span>
+            <span className="w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center">
+              <Image src="/conecta-logo.jpeg" alt="Conecta Leste SP" width={28} height={28} className="object-cover w-full h-full" />
             </span>
             <span className="font-semibold text-sm tracking-tight text-zinc-900 hidden sm:block">
               Conecta Leste SP

@@ -413,10 +413,10 @@ export default function VitrinaDigitalPage() {
               animate="visible"
               className="flex flex-wrap items-center gap-2 mb-6"
             >
-              <span className="px-3 py-1 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#F97316] text-[11px] uppercase tracking-[0.18em] font-semibold">
+              <span className="px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-500 text-[11px] uppercase tracking-[0.18em] font-semibold">
                 Serviço
               </span>
-              <span className="px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-500 text-[11px] uppercase tracking-[0.18em] font-semibold">
+              <span className="px-3 py-1 rounded-full bg-[#F97316] text-white text-[11px] uppercase tracking-[0.18em] font-bold">
                 Landing Pages
               </span>
             </motion.div>
